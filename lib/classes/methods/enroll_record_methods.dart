@@ -6,15 +6,18 @@ class EnrollRecordMethod {
   FirebaseFirestore.instance.collection('enrollmentRecords');
 
   // CREATE: Add a new EnrollmentRecord to Firestore
-  Future<void> createEnrollmentRecord(EnrollmentRecord enrollmentRecord) async {
+  Future<bool> createEnrollmentRecord(EnrollmentRecord enrollmentRecord) async {
+    bool success = false;
     try {
       await enrollmentsCollection
           .doc(enrollmentRecord.id)
           .set(EnrollmentRecord.toFirebaseDoc(enrollmentRecord));
       print('EnrollmentRecord added successfully');
+      success = true;
     } catch (e) {
       print('Failed to add EnrollmentRecord: $e');
     }
+    return success;
   }
 
   // READ: Get an EnrollmentRecord from Firestore by ID

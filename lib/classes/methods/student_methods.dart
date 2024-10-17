@@ -48,15 +48,18 @@ class StudentMethod {
   }
 
   // UPDATE: Update a Student's data in Firestore
-  Future<void> updateStudent(Student student) async {
+  Future<bool> updateStudent(Student student) async {
+    bool success = false;
     try {
       await studentsCollection
           .doc(student.id)
-          .update(Student.toFirebaseDoc(student));
+          .set(Student.toFirebaseDoc(student));
       print('Student updated successfully');
+      success = true;
     } catch (e) {
       print('Failed to update student: $e');
     }
+    return success;
   }
 
   // DELETE: Delete a Student from Firestore by ID

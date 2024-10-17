@@ -1,3 +1,4 @@
+import 'package:firebase/pages/register_student_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,16 +12,33 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyAkq1yHzP8nkYCkxyq5eDMPy7wuN0nIRjE",
-            authDomain: "hnd-53-3d26b.firebaseapp.com",
-            projectId: "hnd-53-3d26b",
-            storageBucket: "hnd-53-3d26b.appspot.com",
-            messagingSenderId: "578754999002",
-            appId: "1:578754999002:web:9a1d1a4f1416dea707abe3",
-            measurementId: "G-JTZ8J1SXP8"));
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyDiLLbun-iegk7zQUh26-K_uk9AiiTYevI",
+            authDomain: "star-aera.firebaseapp.com",
+            projectId: "star-aera",
+            storageBucket: "star-aera.appspot.com",
+            messagingSenderId: "304752004739",
+            appId: "1:304752004739:web:b1755106c115644053d5b6",
+            measurementId: "G-KTZYCQ46BL"));
   } else {
     await Firebase.initializeApp();
   }
-  runApp(MyApp1());
+  runApp(MainApp());
+}
+
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: RegisterStudentScreen(),
+    );
+  }
 }

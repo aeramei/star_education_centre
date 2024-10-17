@@ -46,6 +46,32 @@ class EnrollmentRecord implements RecordData {
       discountPercent: doc['discountPercent'],
     );
   }
+
+  static EnrollmentRecordFactory(
+      EnrollmentRecord enrollmentRecord, int NumberOfCourse) {
+    switch (NumberOfCourse) {
+      case 0:
+        return EnrollmentRecord(
+            id: enrollmentRecord.id,
+            recordTime: enrollmentRecord.recordTime,
+            course: enrollmentRecord.course);
+      case 1:
+        return BasicEnrollmentRecord(
+            id: enrollmentRecord.id,
+            recordTime: enrollmentRecord.recordTime,
+            course: enrollmentRecord.course);
+      case 2:
+        return StandardEnrollmentRecord(
+            id: enrollmentRecord.id,
+            recordTime: enrollmentRecord.recordTime,
+            course: enrollmentRecord.course);
+      default:
+        return PremiumEnrollmentRecord(
+            id: enrollmentRecord.id,
+            recordTime: enrollmentRecord.recordTime,
+            course: enrollmentRecord.course);
+    }
+  }
 }
 
 // Basic Enrollment (No discount)
@@ -58,7 +84,7 @@ class BasicEnrollmentRecord extends EnrollmentRecord {
 
   @override
   void _calculateDiscountAndFinalPrice() {
-    finalPrice = course.fees;
+    finalPrice = course.fees - (course.fees * (discountPercent / 100));
   }
 }
 

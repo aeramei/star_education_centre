@@ -1,40 +1,21 @@
 {
   "project_info": {
-    "project_number": "578754999002",
-    "project_id": "hnd-53-3d26b",
-    "storage_bucket": "hnd-53-3d26b.appspot.com"
+    "project_number": "304752004739",
+    "project_id": "star-aera",
+    "storage_bucket": "star-aera.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:578754999002:android:9129e444ac8b628a07abe3",
+        "mobilesdk_app_id": "1:304752004739:android:e97bb2e420d7d84953d5b6",
         "android_client_info": {
-          "package_name": "com.example.firebase"
+          "package_name": "com.example.star_education_centre"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA7-gGw5UZQSqoh4RzAe4MYwdB9bWnKERA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:578754999002:android:0975240c0a50cade07abe3",
-        "android_client_info": {
-          "package_name": "com.flutterfire.app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA7-gGw5UZQSqoh4RzAe4MYwdB9bWnKERA"
+          "current_key": "AIzaSyBIBea8pfWVmHq5Hi4VZQFpnCFWnAeXoxM"
         }
       ],
       "services": {
