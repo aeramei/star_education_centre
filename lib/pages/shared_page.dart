@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:mhk_star_education/pages/home_page.dart';
-// import 'package:mhk_star_education/pages/student_list.dart';
+// import 'package:mhk_star_education/pages/list_of_student_screen.dart';
 // import 'package:mhk_star_education/pages/student_page.dart';
 //
 // class SharedPage extends StatefulWidget {

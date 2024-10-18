@@ -29,8 +29,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   String _selectedGender = 'Male';
   String _selectedSection = '';
 
-  // Simulated section list for the dropdown
-
+  // Function to pick date of birth
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -45,6 +44,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     }
   }
 
+  // Function to handle student registration
   void _registerStudent() {
     if (_formKey.currentState!.validate()) {
       newStudent = Student(
@@ -79,6 +79,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     }
   }
 
+  // Function to reset the form data
   void _resetData() {
     setState(() {
       _nameController.text = '';
@@ -98,170 +99,194 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
         title: const Text('Register New Student'),
         backgroundColor: Colors.pinkAccent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              // Name input
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pinkAccent),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.pinkAccent),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the student\'s name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-
-              // Date of Birth input as Text with GestureDetector
-              GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: Colors.pinkAccent),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Center(
+                        child: Text(
+                          'Student Registration Form',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      _dob != null
-                          ? DateFormat('yyyy-MM-dd').format(_dob!)
-                          : 'Select Date of Birth',
-                      style: TextStyle(
-                        color: _dob != null
-                            ? Colors.pinkAccent
-                            : Colors.pinkAccent.withOpacity(0.5),
-                        fontSize: 16.0,
+                      const SizedBox(
+                        height: 30,
                       ),
-                    ),
+                      // Name input
+                      TextFormField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Full Name',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent),
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.pinkAccent),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the student\'s name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Date of Birth input
+                      GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: AbsorbPointer(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.pinkAccent),
+                              ),
+                            ),
+                            child: Text(
+                              _dob != null
+                                  ? DateFormat('yyyy-MM-dd').format(_dob!)
+                                  : 'Select Date of Birth',
+                              style: TextStyle(
+                                color: _dob != null
+                                    ? Colors.pinkAccent
+                                    : Colors.pinkAccent.withOpacity(0.5),
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Gender dropdown
+                      DropdownButtonFormField<String>(
+                        value: _selectedGender,
+                        decoration: const InputDecoration(
+                          labelText: 'Gender',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                        ),
+                        items: ['Male', 'Female', 'Other']
+                            .map((gender) => DropdownMenuItem(
+                                value: gender, child: Text(gender)))
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedGender = value ?? 'Male';
+                          });
+                        },
+                        style: const TextStyle(color: Colors.pinkAccent),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Email input
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent),
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.pinkAccent),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the student\'s email';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Phone input
+                      TextFormField(
+                        controller: _phoneController,
+                        decoration: const InputDecoration(
+                          labelText: 'Phone Number',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent),
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.pinkAccent),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Father's Name input
+                      TextFormField(
+                        controller: _fatherNameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Father\'s Name',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent),
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.pinkAccent),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Section dropdown
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(
+                          labelText: 'Section',
+                          labelStyle: TextStyle(color: Colors.pinkAccent),
+                        ),
+                        value:
+                            _selectedSection.isEmpty ? null : _selectedSection,
+                        hint: const Text('Select Section',
+                            style: TextStyle(color: Colors.pinkAccent)),
+                        items: courseSections.map((section) {
+                          return DropdownMenuItem(
+                            value: section.name,
+                            child: Text(section.name,
+                                style:
+                                    const TextStyle(color: Colors.pinkAccent)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedSection = value!;
+                          });
+                        },
+                        style: const TextStyle(color: Colors.pinkAccent),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a section';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Submit button
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.pinkAccent, // Light pink button
+                        ),
+                        onPressed: _registerStudent,
+                        child: const Text('Register Student'),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-
-              // Gender dropdown
-              DropdownButtonFormField<String>(
-                value: _selectedGender,
-                decoration: const InputDecoration(
-                  labelText: 'Gender',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                ),
-                items: ['Male', 'Female', 'Other']
-                    .map((gender) =>
-                        DropdownMenuItem(value: gender, child: Text(gender)))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value ?? 'Male';
-                  });
-                },
-                style: const TextStyle(color: Colors.pinkAccent),
-              ),
-              const SizedBox(height: 10),
-
-              // Email input
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pinkAccent),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.pinkAccent),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the student\'s email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-
-              // Phone number input
-              TextFormField(
-                controller: _phoneController,
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pinkAccent),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.pinkAccent),
-              ),
-              const SizedBox(height: 10),
-
-              // Father name input
-              TextFormField(
-                controller: _fatherNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Father\'s Name',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pinkAccent),
-                  ),
-                ),
-                style: const TextStyle(color: Colors.pinkAccent),
-              ),
-              const SizedBox(height: 10),
-
-              // Section dropdown
-              DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: 'Section',
-                  labelStyle: TextStyle(color: Colors.pinkAccent),
-                ),
-                value: _selectedSection.isEmpty ? null : _selectedSection,
-                hint: const Text('Select Section',
-                    style: TextStyle(color: Colors.pinkAccent)),
-                items: courseSections.map((section) {
-                  return DropdownMenuItem(
-                    value: section.name,
-                    child: Text(section.name,
-                        style: const TextStyle(color: Colors.pinkAccent)),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedSection = value!;
-                  });
-                },
-                style: const TextStyle(color: Colors.pinkAccent),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a section';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-
-              // Submit button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pinkAccent, // Light pink button
-                ),
-                onPressed: _registerStudent,
-                child: const Text('Register Student'),
-              ),
-            ],
+            ),
           ),
         ),
       ),

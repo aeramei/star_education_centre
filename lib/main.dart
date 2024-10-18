@@ -1,3 +1,4 @@
+import 'package:firebase/pages/list_of_student_screen.dart';
 import 'package:firebase/pages/register_student_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RegisterStudentScreen(),
+      home: ListOfStudentScreen(),
     );
   }
 }
