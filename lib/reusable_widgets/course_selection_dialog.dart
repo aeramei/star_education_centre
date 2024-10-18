@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class CourseSelectionDialog extends StatefulWidget {
-  const CourseSelectionDialog({super.key, required this.student});
+  const CourseSelectionDialog(
+      {super.key, required this.student, this.enrolledCourses});
 
   final Student student;
+  final List<Course>? enrolledCourses; // List of already enrolled courses
 
   @override
   _CourseSelectionDialogState createState() => _CourseSelectionDialogState();
@@ -21,11 +23,13 @@ class _CourseSelectionDialogState extends State<CourseSelectionDialog> {
   final List<Course> _selectedCourse = [];
   final EnrollRecordMethod _enrollRecordMethod = EnrollRecordMethod();
   final StudentMethod _studentMethod = StudentMethod();
-  bool _isLoading = false; // Track loading state
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize the selection status of courses
     for (var course in programmingCourses) {
       _selectedCoursesId[course.id] = false;
     }
@@ -37,18 +41,18 @@ class _CourseSelectionDialogState extends State<CourseSelectionDialog> {
     });
 
     // Clone the enrollmentRecords list to make it mutable
-    List<EnrollmentRecord> enrollmentRecords = List.from(widget.student.enrollmentRecords);
+    List<EnrollmentRecord> enrollmentRecords =
+        List.from(widget.student.enrollmentRecords);
 
     for (Course course in _selectedCourse) {
-      print(course.name);
-
       EnrollmentRecord temporaryER = EnrollmentRecord(
         id: const Uuid().v1(),
         recordTime: DateTime.now(),
         course: course,
       );
 
-      EnrollmentRecord newEnrollmentRecord = EnrollmentRecord.EnrollmentRecordFactory(
+      EnrollmentRecord newEnrollmentRecord =
+          EnrollmentRecord.EnrollmentRecordFactory(
         temporaryER,
         enrollmentRecords.length,
       );
@@ -69,7 +73,8 @@ class _CourseSelectionDialogState extends State<CourseSelectionDialog> {
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(success ? 'Enrollment successful!' : 'Enrollment failed!'),
+        content:
+            Text(success ? 'Enrollment successful!' : 'Enrollment failed!'),
         backgroundColor: success ? Colors.green : Colors.red,
       ),
     );
@@ -87,46 +92,52 @@ class _CourseSelectionDialogState extends State<CourseSelectionDialog> {
     return AlertDialog(
       title: const Text('Select Courses'),
       content: _isLoading
-          ? const Center(child: CircularProgressIndicator()) // Show loading indicator
+          ? const Center(
+              child: CircularProgressIndicator()) // Show loading indicator
           : SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ...programmingCourses.map(
-                  (course) => CheckboxListTile(
-                title: Text(course.name),
-                subtitle: Text('Fees: ${course.fees.toStringAsFixed(2)} MMK'),
-                value: _selectedCoursesId[course.id],
-                onChanged: (bool? value) {
-                  setState(() {
-                    _selectedCoursesId[course.id] = value ?? false;
-                    if (value == true) {
-                      _selectedCourse.add(course);
-                    } else {
-                      _selectedCourse.remove(course);
-                    }
-                  });
-                },
-                controlAffinity: ListTileControlAffinity.trailing,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...programmingCourses.where((course) {
+                    return widget.enrolledCourses == null ||
+                        !widget.enrolledCourses!.any(
+                            (enrolledCourse) => enrolledCourse.id == course.id);
+                  }).map(
+                    (course) => CheckboxListTile(
+                      title: Text(course.name),
+                      subtitle:
+                          Text('Fees: ${course.fees.toStringAsFixed(2)} MMK'),
+                      value: _selectedCoursesId[course.id],
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _selectedCoursesId[course.id] = value ?? false;
+                          if (value == true) {
+                            _selectedCourse.add(course);
+                          } else {
+                            _selectedCourse.remove(course);
+                          }
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.trailing,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
       actions: _isLoading
           ? []
           : [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: enrollCourse,
-          child: const Text('Attend'),
-        ),
-      ],
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: enrollCourse,
+                child: const Text('Attend'),
+              ),
+            ],
     );
   }
 }
