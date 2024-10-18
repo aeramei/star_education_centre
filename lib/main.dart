@@ -1,7 +1,4 @@
-import 'package:firebase/pages/home_screen.dart';
-import 'package:firebase/pages/list_of_student_screen.dart';
-import 'package:firebase/pages/navigation_screen.dart';
-import 'package:firebase/pages/register_student_screen.dart';
+import 'package:firebase/pages/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +23,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
@@ -39,9 +36,9 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavigationScreen(),
+      home: LoginScreen(),
     );
   }
 }

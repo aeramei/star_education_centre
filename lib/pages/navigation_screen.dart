@@ -1,5 +1,6 @@
 import 'package:firebase/pages/home_screen.dart';
 import 'package:firebase/pages/list_of_student_screen.dart';
+import 'package:firebase/pages/login_screen.dart';
 import 'package:firebase/pages/register_student_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +56,17 @@ class _NavigationScreenState extends State<NavigationScreen> {
         title: const Text('Star Education Centre'),
         centerTitle: true,
         backgroundColor: Colors.pinkAccent,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const LoginScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.logout_outlined))
+        ],
       ),
     );
   }

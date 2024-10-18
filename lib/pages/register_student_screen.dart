@@ -144,7 +144,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         child: AbsorbPointer(
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(color: Colors.pinkAccent),
                               ),

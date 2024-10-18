@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class StudentDetailScreen extends StatefulWidget {
-  StudentDetailScreen({super.key, required this.student});
+  const StudentDetailScreen({super.key, required this.student});
 
   final Student student;
 
@@ -30,7 +30,7 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   String _selectedGender = 'Male';
   String _selectedSection = '';
 
-  StudentMethod _studentMethod = StudentMethod();
+  final StudentMethod _studentMethod = StudentMethod();
 
   @override
   void initState() {

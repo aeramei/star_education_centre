@@ -14,7 +14,7 @@ class _ListOfStudentScreenState extends State<ListOfStudentScreen> {
   List<Student>? students;
   List<Student>? filteredStudents; // List to store filtered students
   final StudentMethod _studentMethod = StudentMethod();
-  TextEditingController _searchController =
+  final TextEditingController _searchController =
       TextEditingController(); // Controller for search bar
 
   @override
@@ -72,16 +72,16 @@ class _ListOfStudentScreenState extends State<ListOfStudentScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search by name or ID',
-                prefixIcon: Icon(Icons.search, color: Colors.pinkAccent),
+                prefixIcon: const Icon(Icons.search, color: Colors.pinkAccent),
                 filled: true,
                 fillColor: Colors.pink[50],
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.pinkAccent),
+                  borderSide: const BorderSide(color: Colors.pinkAccent),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.pinkAccent, width: 2.0),
+                  borderSide: const BorderSide(color: Colors.pinkAccent, width: 2.0),
                 ),
               ),
             ),

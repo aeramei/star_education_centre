@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int? totalStudents;
   int totalCourses = courseSections.length;
-  StudentMethod _studentMethod = StudentMethod();
+  final StudentMethod _studentMethod = StudentMethod();
 
   Future<int> _fetchTotalStudents() async {
     return await _studentMethod.countTotalStudent();
