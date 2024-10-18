@@ -1,6 +1,5 @@
 import 'package:firebase/classes/course.dart';
 import 'package:firebase/classes/enrollment_record.dart';
-import 'package:firebase/classes/methods/enroll_record_methods.dart';
 import 'package:firebase/classes/methods/student_methods.dart';
 import 'package:firebase/classes/student.dart';
 import 'package:firebase/courses.dart';
@@ -21,7 +20,6 @@ class CourseSelectionDialog extends StatefulWidget {
 class _CourseSelectionDialogState extends State<CourseSelectionDialog> {
   final Map<String, bool> _selectedCoursesId = {};
   final List<Course> _selectedCourse = [];
-  final EnrollRecordMethod _enrollRecordMethod = EnrollRecordMethod();
   final StudentMethod _studentMethod = StudentMethod();
   bool _isLoading = false;
 

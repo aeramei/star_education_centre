@@ -144,10 +144,6 @@ class _StudentDetailScreenState extends State<StudentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Student Details'),
-        backgroundColor: Colors.pinkAccent,
-      ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

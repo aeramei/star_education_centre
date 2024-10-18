@@ -5,6 +5,19 @@ class StudentMethod {
   final CollectionReference studentsCollection =
       FirebaseFirestore.instance.collection('students');
 
+  Future<int> countTotalStudent() async {
+    int total = 0;
+    try {
+      var query = await studentsCollection.count().get();
+
+      total = query.count ?? 0;
+    } catch (e) {
+      print("Failed to count students: $e");
+    }
+
+    return total;
+  }
+
   // CREATE: Add a new Student to Firestore
   Future<void> createStudent(Student student) async {
     try {

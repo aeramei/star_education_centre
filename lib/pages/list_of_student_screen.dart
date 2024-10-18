@@ -63,10 +63,6 @@ class _ListOfStudentScreenState extends State<ListOfStudentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('List of Students'),
-        backgroundColor: Colors.pinkAccent,
-      ),
       body: Column(
         children: [
           // Search bar
